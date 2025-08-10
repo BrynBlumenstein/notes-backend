@@ -13,6 +13,8 @@ app.use(
 	)
 );
 
+app.use(express.static('dist'));
+
 let notes = [
 	{
 		id: '1',
