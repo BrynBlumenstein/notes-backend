@@ -13,15 +13,21 @@ const api = supertest(app);
 describe('when there is initially some notes and a user saved', () => {
 	beforeEach(async () => {
 		await Note.deleteMany({});
-		await Note.insertMany(helper.initialNotes);
-
 		await User.deleteMany({});
+
 		const passwordHash = await bcrypt.hash('sekret', 10);
 		const user = new User({
 			username: 'root',
 			passwordHash
 		});
 		await user.save();
+
+		const notesWithUser = helper.initialNotes.map(note => ({
+			...note,
+			user: user._id.toString()
+		}));
+
+		await Note.insertMany(notesWithUser);
 	});
 
 	test('notes are returned as json', async () => {
