@@ -1,17 +1,27 @@
 const assert = require('node:assert');
 const { test, after, beforeEach, describe } = require('node:test');
+const bcrypt = require('bcrypt');
 const mongoose = require('mongoose');
 const supertest = require('supertest');
 const app = require('../app');
 const Note = require('../models/note');
+const User = require('../models/user');
 const helper = require('./test_helper');
 
 const api = supertest(app);
 
-describe('when there is initially some notes saved', () => {
+describe('when there is initially some notes and a user saved', () => {
 	beforeEach(async () => {
 		await Note.deleteMany({});
 		await Note.insertMany(helper.initialNotes);
+
+		await User.deleteMany({});
+		const passwordHash = await bcrypt.hash('sekret', 10);
+		const user = new User({
+			username: 'root',
+			passwordHash
+		});
+		await user.save();
 	});
 
 	test('notes are returned as json', async () => {
@@ -62,9 +72,12 @@ describe('when there is initially some notes saved', () => {
 
 	describe('addition of a new note', () => {
 		test('succeeds with valid data', async () => {
+			const users = await helper.usersInDb();
+
 			const newNote = {
 				content: 'async/await simplifies making async calls',
-				important: true
+				important: true,
+				userId: users[0].id
 			};
 
 			await api

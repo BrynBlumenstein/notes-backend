@@ -4,6 +4,7 @@ const config = require('./utils/config');
 const logger = require('./utils/logger');
 const middleware = require('./utils/middleware');
 const notesRouter = require('./controllers/notes');
+const usersRouter = require('./controllers/users');
 // const cors = require('cors');
 // const morgan = require('morgan');
 
@@ -32,6 +33,7 @@ app.use(
 ); */
 
 app.use('/api/notes', notesRouter);
+app.use('/api/users', usersRouter);
 
 app.use(middleware.unknownEndpoint);
 app.use(middleware.errorHandler);
