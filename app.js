@@ -24,6 +24,7 @@ mongoose
 
 app.use(express.static('dist'));
 app.use(express.json());
+app.use(middleware.tokenExtractor);
 app.use(middleware.requestLogger);
 /* morgan.token('data', (request) => JSON.stringify(request.body));
 app.use(
