@@ -5,8 +5,9 @@ const logger = require('./utils/logger');
 const middleware = require('./utils/middleware');
 const notesRouter = require('./controllers/notes');
 const usersRouter = require('./controllers/users');
-// const cors = require('cors');
+const loginRouter = require('./controllers/login');
 // const morgan = require('morgan');
+// const cors = require('cors');
 
 const app = express();
 
@@ -24,16 +25,17 @@ mongoose
 app.use(express.static('dist'));
 app.use(express.json());
 app.use(middleware.requestLogger);
-// app.use(cors());
 /* morgan.token('data', (request) => JSON.stringify(request.body));
 app.use(
 	morgan(
 		':method :url :status :res[content-length] - :response-time ms :data'
 	)
 ); */
+// app.use(cors());
 
 app.use('/api/notes', notesRouter);
 app.use('/api/users', usersRouter);
+app.use('/api/login', loginRouter);
 
 app.use(middleware.unknownEndpoint);
 app.use(middleware.errorHandler);

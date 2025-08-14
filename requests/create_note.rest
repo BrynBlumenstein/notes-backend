@@ -1,16 +1,8 @@
 POST http://localhost:3001/api/notes/
 Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InJvb3QiLCJpZCI6IjY4OWJiMDBkMGJhYjc4ZWEyOTNiYjgwMSIsImlhdCI6MTc1NTE3MTU1MH0.Vv6BKdm6F-2Hk8G1U3K9w5Oa4O5gYbaYCRV2R7M0iSU
 
 {
-    "content": "new important note",
-    "important": true,
-    "userId": "689bb00d0bab78ea293bb801"
-}
-
-###
-POST http://localhost:3001/api/notes/
-Content-Type: application/json
-
-{
-    "content": "new note"
+    "content": "note after jwt auth",
+    "important": true
 }
