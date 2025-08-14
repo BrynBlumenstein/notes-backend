@@ -52,10 +52,10 @@ notesRouter.delete('/:id', async (request, response) => {
 	response.status(204).end();
 });
 
-notesRouter.put('/:id', (request, response) => {
+notesRouter.put('/:id', async (request, response) => {
 	const { content, important } = request.body;
 
-	const note = Note.findById(request.params.id);
+	const note = await Note.findById(request.params.id);
 
 	if (!note) {
 		return response.status(404).end();
@@ -64,7 +64,7 @@ notesRouter.put('/:id', (request, response) => {
 	note.content = content;
 	note.important = important;
 
-	const updatedNote = note.save();
+	const updatedNote = await note.save();
 
 	response.json(updatedNote);
 });
