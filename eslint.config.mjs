@@ -23,6 +23,6 @@ export default [
 		}
 	},
 	{
-		ignorePatterns: ['dist/**']
+		ignores: ['dist/**']
 	}
 ];
